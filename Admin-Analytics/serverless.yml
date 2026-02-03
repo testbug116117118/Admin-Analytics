@@ -1,0 +1,20 @@
+service: enterprise-monitoring-system
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  region: us-east-1
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:*
+      Resource: '*'
+
+functions:
+  logUserActivity:
+    handler: handlers/logger.logActivity
+    events:
+      - http:
+          path: log
+          method: get
+          cors: true
